@@ -49,72 +49,14 @@ public class ReactionsClicBouton implements ActionListener{
 	}
 
 	private void afficherpaires() {
-		ListeJoueurs listeJoueurs = new ListeJoueurs();
-		try {
-			listeJoueurs = ListeJoueurs.charger();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Enumeration<Joueur> enumJoueurs;
-		ArrayList<String[]> gitan = new ArrayList<String[]>();
-		Joueur joueurCourant;
-		String[][] mainTab;
 		String[] entetes = {"License", "Nom", "Prenom"};
-		int i;
-		enumJoueurs= listeJoueurs.tousJoueurs();
-		while(enumJoueurs.hasMoreElements()){
-			joueurCourant = enumJoueurs.nextElement();
-			String[] tabCourant = {joueurCourant.getNumLic(), joueurCourant.getNomJ(), joueurCourant.getPrenomJ()};
-			gitan.add(tabCourant);
-		}
-		mainTab = new String[gitan.size()][];
-		i = 0;
-		for(String[] j : gitan){
-			mainTab[i] = j;
-			i++;
-		}
-		DefaultTableModel model = new DefaultTableModel(mainTab,entetes);
+		DefaultTableModel model = new DefaultTableModel(this.chargerListeJoueurs(),entetes);
 		this.laFen.afficherpaires(model);
 	}
 
-	private void afficherJoueurs(){
-		ListeJoueurs listeJoueurs = new ListeJoueurs();
-		Joueur joueurCourant;
-		String[][] mainTab;
-		ArrayList<String[]> listeEntrees= new ArrayList<String[]>();
-		Enumeration<Joueur> enumJoueurs;
-
-		//On charge la liste des Joueurs enregistrée sur le disque
-		try {
-			listeJoueurs = ListeJoueurs.charger();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		//On récupère les informations dont on a besoin dans une liste de chaine de caractère
-		enumJoueurs= listeJoueurs.tousJoueurs();
-		int i;
-		while(enumJoueurs.hasMoreElements()){
-			joueurCourant = enumJoueurs.nextElement();
-			String[] tabCourant = {joueurCourant.getNumLic(), joueurCourant.getNomJ(), joueurCourant.getPrenomJ()};
-			listeEntrees.add(tabCourant);
-		}
-
-		//On transfere ensuite le contenu de la liste dans un tableau afin de pouvoir l'utiliser pour creer un objet de type DefaultTableModel
-		mainTab = new String[listeEntrees.size()][];
-		i = 0;
-		for(String[] j : listeEntrees){
-			mainTab[i] = j;
-			i++;
-		}
-
-		//Toutes les informations recuperees, on initialise l'objet de type DefaultTableModel et on le passe en parametre a la vue
+	private void afficherJoueurs(){//Toutes les informations recuperees, on initialise l'objet de type DefaultTableModel et on le passe en parametre a la vue
 		String[] entetes = {"License", "Nom", "Prenom"};
-		DefaultTableModel model = new DefaultTableModel(mainTab,entetes);
+		DefaultTableModel model = new DefaultTableModel(this.chargerListeJoueurs(),entetes);
 		this.laFen.afficherJoueurs(model); 
 	}
 
@@ -137,5 +79,40 @@ public class ReactionsClicBouton implements ActionListener{
 		String[] entetes = {"Match", "Paire A", "Paire B","Score A","Score B","Vainqueur"};
 		DefaultTableModel model = new DefaultTableModel(mainTab,entetes);
 		this.laFen.affichermatchs(model); 
+	}
+	
+	private String[][] chargerListeJoueurs(){
+		ListeJoueurs listeJoueurs = new ListeJoueurs();
+		Joueur joueurCourant;
+		String[][] mainTab;
+		ArrayList<String[]> listeEntrees= new ArrayList<String[]>();
+		Enumeration<Joueur> enumJoueurs;
+
+		//On charge la liste des Joueurs enregistree sur le disque
+		try {
+			listeJoueurs = ListeJoueurs.charger();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		//On recupere les informations dont on a besoin dans une liste de chaine de caractere
+		enumJoueurs= listeJoueurs.tousJoueurs();
+		int i;
+		while(enumJoueurs.hasMoreElements()){
+			joueurCourant = enumJoueurs.nextElement();
+			String[] tabCourant = {joueurCourant.getNumLic(), joueurCourant.getNomJ(), joueurCourant.getPrenomJ()};
+			listeEntrees.add(tabCourant);
+		}
+
+		//On transfere ensuite le contenu de la liste dans un tableau afin de pouvoir l'utiliser pour creer un objet de type DefaultTableModel
+		mainTab = new String[listeEntrees.size()][];
+		i = 0;
+		for(String[] j : listeEntrees){
+			mainTab[i] = j;
+			i++;
+		}
+		return mainTab;
 	}
 }
