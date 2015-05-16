@@ -1,4 +1,4 @@
-package view;
+package TestUi;
 
 import java.io.IOException;
 
@@ -9,7 +9,7 @@ import datas.*;
 public class TestUI {
 
 	public static void main(String[] args) {
-		Joueur j1 = new Joueur("123", "Jean", "Pierre");
+		/*Joueur j1 = new Joueur("123", "Jean", "Pierre");
 		Joueur j2 = new Joueur("456", "Jacques", "Goldman");
 		Joueur j3 = new Joueur("789", "Vulu", "Zulu");
 		ListeJoueurs l1 = new ListeJoueurs();
@@ -21,8 +21,8 @@ public class TestUI {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//FenetrePrinc test = new FenetrePrinc();
-		//test.toFront(); //juste pour enlever le warning
+		FenetrePrinc test = new FenetrePrinc();
+		test.toFront(); //juste pour enlever le warning*/
 	}
 
 }
