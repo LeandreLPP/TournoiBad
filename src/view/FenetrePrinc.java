@@ -139,13 +139,13 @@ public class FenetrePrinc extends JFrame{
 	private void attacherReaction(){
 		this.addComponentListener ( new WinReaction());
 		this.reactBout = new ReactionsClicBouton(this); 
-		this.butListeJoueurs.addActionListener(reactBout); 
+		this.butListeJoueurs.addActionListener(this.reactBout); 
 		this.butListeJoueurs.setActionCommand("ListeJoueurs");
-		this.butFormationPaires.addActionListener(reactBout);
+		this.butFormationPaires.addActionListener(this.reactBout);
 		this.butFormationPaires.setActionCommand("FormationPaires");
-		this.butCreationPoules.addActionListener(reactBout);
+		this.butCreationPoules.addActionListener(this.reactBout);
 		this.butCreationPoules.setActionCommand("CreationPoules");
-		this.butGestionMatchs.addActionListener(reactBout);
+		this.butGestionMatchs.addActionListener(this.reactBout);
 		this.butGestionMatchs.setActionCommand("GestionMatchs");
 	}
 
@@ -186,7 +186,7 @@ public class FenetrePrinc extends JFrame{
 		JButton bouton1 = new JButton(">");
 		JButton bouton2 = new JButton("<");
 		JButton boutonOKPaires = new JButton("OK");
-		boutonOKPaires.addActionListener(reactBout);
+		boutonOKPaires.addActionListener(this.reactBout);
 		boutonOKPaires.setActionCommand("OKPaires");
 		les3boutons.setLayout(new GridLayout(3,1));
 		les3boutons.add(bouton1);
@@ -260,7 +260,7 @@ public class FenetrePrinc extends JFrame{
 		JButton bouton1 = new JButton(">");
 		JButton bouton2 = new JButton("<");
 		JButton boutonOKPoules = new JButton("OK");
-		boutonOKPoules.addActionListener(reactBout);
+		boutonOKPoules.addActionListener(this.reactBout);
 		boutonOKPoules.setActionCommand("OKPoules");
 		les3boutons.setLayout(new GridLayout(3,1));
 		les3boutons.add(bouton1);
