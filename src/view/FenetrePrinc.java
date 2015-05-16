@@ -3,15 +3,11 @@ package view;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Enumeration;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import control.*;
-import datas.*;
 
 public class FenetrePrinc extends JFrame{
 
@@ -19,9 +15,6 @@ public class FenetrePrinc extends JFrame{
 
 	//L'attribut de serie
 	private static final long serialVersionUID = 0;
-	//-------------Les donnees---------------------------------------
-	private static ListeJoueurs listeJoueurs;
-	//private static ListePaires listePaires;
 
 	//-------------La vue--------------------------------------------
 
@@ -55,12 +48,9 @@ public class FenetrePrinc extends JFrame{
 	//Fenetre active
 	private JComponent compCentral;
 	
-	//Pas tries encore
-	JButton boutonOKPaires =new JButton("OK");
-	JButton boutonOKPoules = new JButton("OK");
-	
 	//Classes Control
 	private LaunchFenetrePrinc launcher;
+	private ReactionsClicBouton reactBout;
 
 	//================================================LES METHODES===================================================================================
 	/**
@@ -148,19 +138,15 @@ public class FenetrePrinc extends JFrame{
 	 */
 	private void attacherReaction(){
 		this.addComponentListener ( new WinReaction());
-		ReactionsClicBouton reactBout = new ReactionsClicBouton(this); 
+		this.reactBout = new ReactionsClicBouton(this); 
 		this.butListeJoueurs.addActionListener(reactBout); 
 		this.butListeJoueurs.setActionCommand("ListeJoueurs");
 		this.butFormationPaires.addActionListener(reactBout);
 		this.butFormationPaires.setActionCommand("FormationPaires");
-		this.boutonOKPaires.addActionListener(reactBout);
-		this.boutonOKPaires.setActionCommand("OKPaires");
 		this.butCreationPoules.addActionListener(reactBout);
 		this.butCreationPoules.setActionCommand("CreationPoules");
 		this.butGestionMatchs.addActionListener(reactBout);
 		this.butGestionMatchs.setActionCommand("GestionMatchs");
-		this.boutonOKPoules.addActionListener(reactBout);
-		this.boutonOKPoules.setActionCommand("OKPoules");
 	}
 
 	/**
@@ -199,6 +185,9 @@ public class FenetrePrinc extends JFrame{
 		JPanel les3boutons = new JPanel();
 		JButton bouton1 = new JButton(">");
 		JButton bouton2 = new JButton("<");
+		JButton boutonOKPaires = new JButton("OK");
+		boutonOKPaires.addActionListener(reactBout);
+		boutonOKPaires.setActionCommand("OKPaires");
 		les3boutons.setLayout(new GridLayout(3,1));
 		les3boutons.add(bouton1);
 		les3boutons.add(bouton2);
@@ -270,6 +259,9 @@ public class FenetrePrinc extends JFrame{
 		JPanel les3boutons = new JPanel();
 		JButton bouton1 = new JButton(">");
 		JButton bouton2 = new JButton("<");
+		JButton boutonOKPoules = new JButton("OK");
+		boutonOKPoules.addActionListener(reactBout);
+		boutonOKPoules.setActionCommand("OKPoules");
 		les3boutons.setLayout(new GridLayout(3,1));
 		les3boutons.add(bouton1);
 		les3boutons.add(bouton2);
@@ -329,6 +321,7 @@ public class FenetrePrinc extends JFrame{
 	
 	public void affichermatchs(DefaultTableModel model){
 		this.labelCentre.remove(this.compCentral);
+		
 		//On creer un panel pour cette "page"
 		JPanel panJou = new JPanel();
 
@@ -346,6 +339,10 @@ public class FenetrePrinc extends JFrame{
 		this.labelCentre.add(compCentral,BorderLayout.CENTER);
 		this.pack();
 
+	}
+	
+	public LaunchFenetrePrinc getLauncher(){
+		return this.launcher;
 	}
 	
 	/*private void initBdd(){

@@ -32,4 +32,7 @@ public class LaunchFenetrePrinc {
 		}
 	}
 
+	public void close(){
+		this.laFen.dispose();
+	}
 }
