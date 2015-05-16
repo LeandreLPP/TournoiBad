@@ -55,11 +55,12 @@ public class FenetrePrinc extends JFrame{
 	//Fenetre active
 	private JComponent compCentral;
 	
-	
-	
 	//Pas tries encore
 	JButton boutonOKPaires =new JButton("OK");
 	JButton boutonOKPoules = new JButton("OK");
+	
+	//Classes Control
+	private LaunchFenetrePrinc launcher;
 
 	//================================================LES METHODES===================================================================================
 	/**
@@ -67,12 +68,13 @@ public class FenetrePrinc extends JFrame{
 	 * Appelle successivement les methodes de mise en place du decors d'accueil
 	 * et la methode d'initialisation des reactions
 	 */
-	public FenetrePrinc(){
+	public FenetrePrinc(LaunchFenetrePrinc launcher){
 		super("Logiciel de gestion de tournois badminton");
+		this.launcher = launcher;
 		this.miseEnPlaceDecor();
 		this.attacherReaction();
-		this.setSize( 800, 500 ); // dimensionnement de la fenêtre 
-		this.setVisible( true ); // rendre la fenêtre visible 
+		this.setSize( 800, 500 ); // dimensionnement de la fenetre 
+		this.setVisible( true ); // rendre la fenetre visible 
 		this.setDefaultCloseOperation ( EXIT_ON_CLOSE ); // clic sur la croix
 
 	}
@@ -142,7 +144,7 @@ public class FenetrePrinc extends JFrame{
 	}
 	
 	/**
-	 * Affecte les réactions aux actions de l'utilisateur
+	 * Affecte les reactions aux actions de l'utilisateur
 	 */
 	private void attacherReaction(){
 		this.addComponentListener ( new WinReaction());
@@ -398,9 +400,9 @@ public class FenetrePrinc extends JFrame{
 	private class WinReaction extends ComponentAdapter { 
 
 		public void componentResized ( ComponentEvent e ) { 
-			// labelCentre = attribut déjà déclaré (voir mise en place décor) 
-			// imgTournoi = attribut déjà déclaré (voir mise en place décor) 
-			// getScaledImage(…) : méthode à écrire (voir ci-après) 
+			// labelCentre = attribut deja declare (voir mise en place decor) 
+			// imgTournoi = attribut deja� declare (voir mise en place decor) 
+			// getScaledImage() : methode a ecrire (voir ci-apres) 
 			int w = labelCentre.getSize().width; 
 			int h = labelCentre.getSize().height; 
 			ImageIcon tmp = new ImageIcon(getScaledImage( imgTournoi.getImage(), w, h )); 

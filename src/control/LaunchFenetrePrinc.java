@@ -1,14 +1,23 @@
-package view;
+package control;
 
 import java.io.IOException;
 
-import view.FenetrePrinc;
-
+import view.*;
 import datas.*;
 
-public class TestUI {
+public class LaunchFenetrePrinc {
+	private FenetrePrinc laFen;
 
 	public static void main(String[] args) {
+		new LaunchFenetrePrinc();
+	}
+	
+	private LaunchFenetrePrinc(){
+		this.initListeJoueurTest();
+		this.laFen = new FenetrePrinc(this);
+	}
+	
+	private void initListeJoueurTest(){
 		Joueur j1 = new Joueur("123", "Jean", "Pierre");
 		Joueur j2 = new Joueur("456", "Jacques", "Goldman");
 		Joueur j3 = new Joueur("789", "Vulu", "Zulu");
@@ -21,8 +30,6 @@ public class TestUI {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		FenetrePrinc test = new FenetrePrinc();
-		test.toFront(); //juste pour enlever le warning
 	}
 
 }
