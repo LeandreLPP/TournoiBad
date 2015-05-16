@@ -150,12 +150,17 @@ public class FenetrePrinc extends JFrame{
 		this.addComponentListener ( new WinReaction());
 		ReactionsClicBouton reactBout = new ReactionsClicBouton(this); 
 		this.butListeJoueurs.addActionListener(reactBout); 
+		this.butListeJoueurs.setActionCommand("ListeJoueurs");
 		this.butFormationPaires.addActionListener(reactBout);
+		this.butFormationPaires.setActionCommand("FormationPaires");
 		this.boutonOKPaires.addActionListener(reactBout);
+		this.boutonOKPaires.setActionCommand("OKPaires");
 		this.butCreationPoules.addActionListener(reactBout);
+		this.butCreationPoules.setActionCommand("CreationPoules");
 		this.butGestionMatchs.addActionListener(reactBout);
+		this.butGestionMatchs.setActionCommand("GestionMatchs");
 		this.boutonOKPoules.addActionListener(reactBout);
-
+		this.boutonOKPoules.setActionCommand("OKPoules");
 	}
 
 	/**
@@ -171,7 +176,6 @@ public class FenetrePrinc extends JFrame{
 		panJou.setLayout(new BorderLayout());
 		panJou.add(tableJoueurs, BorderLayout.CENTER);
 		panJou.add(tableJoueurs.getTableHeader(), BorderLayout.NORTH);
-		panJou.setOpaque(false);
 
 		//Ajout de la fenetre Liste des joueurs en tant que fenetre active
 		this.compCentral = panJou;
@@ -183,41 +187,14 @@ public class FenetrePrinc extends JFrame{
 		return this.butListeJoueurs;
 	}
 	
-	public void afficherpaires(){
+	public void afficherpaires(DefaultTableModel model){
 		this.labelCentre.remove(this.compCentral);
 		//On creer un panel pour cette "page"
 		JPanel panPaire = new JPanel();
 		panPaire.setLayout(new GridLayout(1,3));
 
 		//On charge un tableau de joueurs
-		JTable tableJoueurs;
-		try {
-			listeJoueurs = ListeJoueurs.charger();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Enumeration<Joueur> enumJoueurs;
-		ArrayList<String[]> gitan = new ArrayList<String[]>();
-		Joueur joueurCourant;
-		String[][] mainTab;
-		String[] entetes = {"License", "Nom", "Prenom"};
-		int i;
-		enumJoueurs= listeJoueurs.tousJoueurs();
-		while(enumJoueurs.hasMoreElements()){
-			joueurCourant = enumJoueurs.nextElement();
-			String[] tabCourant = {joueurCourant.getNumLic(), joueurCourant.getNomJ(), joueurCourant.getPrenomJ()};
-			gitan.add(tabCourant);
-		}
-		mainTab = new String[gitan.size()][];
-		i = 0;
-		for(String[] j : gitan){
-			mainTab[i] = j;
-			i++;
-		}
-		DefaultTableModel model = new DefaultTableModel(mainTab,entetes);
-		tableJoueurs = new JTable(model);
+		JTable tableJoueurs = new JTable(model);
 
 		JPanel les3boutons = new JPanel();
 		JButton bouton1 = new JButton(">");
@@ -233,9 +210,6 @@ public class FenetrePrinc extends JFrame{
 		String[] entetes2 = {"Paires formees"};
 		DefaultTableModel model2 = new DefaultTableModel(mainTab2,entetes2);
 		JTable tablePaires = new JTable(model2);
-		
-		
-		
 		
 		JPanel paneltableau = new JPanel();
 		paneltableau.setLayout(new BorderLayout());
@@ -259,10 +233,6 @@ public class FenetrePrinc extends JFrame{
 		this.labelCentre.add(compCentral,BorderLayout.CENTER);
 		this.pack();
 	}
-
-	public JButton getBoutPaires(){
-		return this.butFormationPaires;
-	}
 	
 	public void OKPaires(DefaultTableModel model){ 
 		this.labelCentre.remove(this.compCentral);
@@ -282,10 +252,6 @@ public class FenetrePrinc extends JFrame{
 		this.compCentral = panJou;
 		this.labelCentre.add(compCentral,BorderLayout.CENTER);
 		this.pack();
-	}
-	
-	public JButton getBoutOKPaires(){
-		return this.boutonOKPaires;
 	}
 	
 	public void afficherpoules(){
@@ -339,10 +305,6 @@ public class FenetrePrinc extends JFrame{
 		this.labelCentre.add(compCentral,BorderLayout.CENTER);
 		this.pack();
 	}
-
-	public JButton getBoutPoules(){
-		return this.butCreationPoules;
-	}
 	
 	public void OKPoules(DefaultTableModel model){ 
 		this.labelCentre.remove(this.compCentral);
@@ -364,9 +326,6 @@ public class FenetrePrinc extends JFrame{
 		this.pack();
 
 	}
-	public JButton getBoutOKPoules(){
-		return this.boutonOKPoules;
-	}
 	
 	public void affichermatchs(DefaultTableModel model){
 		this.labelCentre.remove(this.compCentral);
@@ -387,10 +346,6 @@ public class FenetrePrinc extends JFrame{
 		this.labelCentre.add(compCentral,BorderLayout.CENTER);
 		this.pack();
 
-	}
-	
-	public JButton getBoutMatchs(){
-		return this.butGestionMatchs;
 	}
 	
 	/*private void initBdd(){

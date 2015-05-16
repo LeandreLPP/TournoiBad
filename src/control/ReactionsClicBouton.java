@@ -4,11 +4,12 @@ import java.awt.event.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
+
+import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 
 import datas.Joueur;
 import datas.ListeJoueurs;
-
 import view.*;
 
 public class ReactionsClicBouton implements ActionListener{
@@ -20,23 +21,26 @@ public class ReactionsClicBouton implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if ( this.laFen.getBoutJoueurs() == e.getSource() ) { 
-			this.afficherJoueurs(); 
-		}
-		else if ( this.laFen.getBoutPaires() == e.getSource() ) { 
-			this.afficherpaires(); 
-		}
-		else if ( this.laFen.getBoutOKPaires() == e.getSource() ) { 
-			this.OKPaires(); 
-		}
-		else if ( this.laFen.getBoutPoules() == e.getSource() ) { 
-			this.afficherpoules();
-		}
-		else if ( this.laFen.getBoutOKPoules() == e.getSource() ) { 
-			this.OKPoules(); 
-		}
-		else if ( this.laFen.getBoutMatchs() == e.getSource() ) { 
-			this.affichermatchs(); 
+		JButton source = (JButton)e.getSource();
+		String action = source.getActionCommand();
+		switch (action){
+			case "ListeJoueurs" : this.afficherJoueurs();
+			break;
+
+			case "FormationPaires" : this.afficherpaires();
+			break;
+
+			case "OKPaires" : this.OKPaires();
+			break;
+
+			case "CreationPoules" : this.afficherpoules();
+			break;
+
+			case "GestionMatchs" : this.affichermatchs();
+			break;
+
+			case "OKPoules" : this.OKPoules();
+			break;
 		}
 	}
 
@@ -45,7 +49,34 @@ public class ReactionsClicBouton implements ActionListener{
 	}
 
 	private void afficherpaires() {
-		this.laFen.afficherpaires();
+		ListeJoueurs listeJoueurs = new ListeJoueurs();
+		try {
+			listeJoueurs = ListeJoueurs.charger();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Enumeration<Joueur> enumJoueurs;
+		ArrayList<String[]> gitan = new ArrayList<String[]>();
+		Joueur joueurCourant;
+		String[][] mainTab;
+		String[] entetes = {"License", "Nom", "Prenom"};
+		int i;
+		enumJoueurs= listeJoueurs.tousJoueurs();
+		while(enumJoueurs.hasMoreElements()){
+			joueurCourant = enumJoueurs.nextElement();
+			String[] tabCourant = {joueurCourant.getNumLic(), joueurCourant.getNomJ(), joueurCourant.getPrenomJ()};
+			gitan.add(tabCourant);
+		}
+		mainTab = new String[gitan.size()][];
+		i = 0;
+		for(String[] j : gitan){
+			mainTab[i] = j;
+			i++;
+		}
+		DefaultTableModel model = new DefaultTableModel(mainTab,entetes);
+		this.laFen.afficherpaires(model);
 	}
 
 	private void afficherJoueurs(){
@@ -100,7 +131,7 @@ public class ReactionsClicBouton implements ActionListener{
 		DefaultTableModel model = new DefaultTableModel(mainTab,entetes);
 		this.laFen.OKPoules(model);
 	}
-	
+
 	private void affichermatchs(){
 		String[][] mainTab= new String[12][];
 		String[] entetes = {"Match", "Paire A", "Paire B","Score A","Score B","Vainqueur"};
