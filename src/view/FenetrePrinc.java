@@ -5,8 +5,8 @@ import java.awt.event.*;
 import java.awt.image.*;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 
+import utilitaires.MyTableModel;
 import control.*;
 
 public class FenetrePrinc extends JFrame{
@@ -51,6 +51,10 @@ public class FenetrePrinc extends JFrame{
 	//Classes Control
 	private LaunchFenetrePrinc launcher;
 	private ReactionsClicBouton reactBout;
+
+	private JButton boutonOKPaires;
+
+	private JButton boutonOKPoules;
 
 	//================================================LES METHODES===================================================================================
 	/**
@@ -140,19 +144,19 @@ public class FenetrePrinc extends JFrame{
 		this.addComponentListener ( new WinReaction());
 		this.reactBout = new ReactionsClicBouton(this); 
 		this.butListeJoueurs.addActionListener(this.reactBout); 
-		this.butListeJoueurs.setActionCommand("ListeJoueurs");
 		this.butFormationPaires.addActionListener(this.reactBout);
-		this.butFormationPaires.setActionCommand("FormationPaires");
 		this.butCreationPoules.addActionListener(this.reactBout);
-		this.butCreationPoules.setActionCommand("CreationPoules");
 		this.butGestionMatchs.addActionListener(this.reactBout);
-		this.butGestionMatchs.setActionCommand("GestionMatchs");
+		this.itemAide.addActionListener(this.reactBout);
+		this.itemExit.addActionListener(reactBout);
+		this.itemChargerPaires.addActionListener(reactBout);
+		this.itemSauverPaires.addActionListener(reactBout);
 	}
 
 	/**
 	 * Action realisee quand on clique sur le "bouton Liste des joueurs"
 	 */
-	public void afficherJoueurs(DefaultTableModel model){ 
+	public void afficherJoueurs(MyTableModel model){ 
 		this.labelCentre.remove(this.compCentral);
 		//On creer un panel pour cette "page"
 		JTable tableJoueurs = new JTable(model);
@@ -173,7 +177,7 @@ public class FenetrePrinc extends JFrame{
 		return this.butListeJoueurs;
 	}
 	
-	public void afficherpaires(DefaultTableModel model){
+	public void afficherpaires(MyTableModel model){
 		this.labelCentre.remove(this.compCentral);
 		//On creer un panel pour cette "page"
 		JPanel panPaire = new JPanel();
@@ -185,7 +189,7 @@ public class FenetrePrinc extends JFrame{
 		JPanel les3boutons = new JPanel();
 		JButton bouton1 = new JButton(">");
 		JButton bouton2 = new JButton("<");
-		JButton boutonOKPaires = new JButton("OK");
+		this.boutonOKPaires = new JButton("OK");
 		boutonOKPaires.addActionListener(this.reactBout);
 		boutonOKPaires.setActionCommand("OKPaires");
 		les3boutons.setLayout(new GridLayout(3,1));
@@ -197,7 +201,8 @@ public class FenetrePrinc extends JFrame{
 		//========================================TABLEAU PAIRES=====================================================================================
 		String[][] mainTab2 = new String[1][];
 		String[] entetes2 = {"Paires formees"};
-		DefaultTableModel model2 = new DefaultTableModel(mainTab2,entetes2);
+		MyTableModel model2 = new MyTableModel(mainTab2,entetes2);
+		model2.isCellEditable(ALLBITS, ALLBITS);
 		JTable tablePaires = new JTable(model2);
 		
 		JPanel paneltableau = new JPanel();
@@ -223,7 +228,7 @@ public class FenetrePrinc extends JFrame{
 		this.pack();
 	}
 	
-	public void OKPaires(DefaultTableModel model){ 
+	public void OKPaires(MyTableModel model){ 
 		this.labelCentre.remove(this.compCentral);
 		//
 		JPanel panJou = new JPanel();
@@ -252,14 +257,15 @@ public class FenetrePrinc extends JFrame{
 		//========================================TABLEAU PAIRES=====================================================================================
 		String[][] mainTab2 = new String[12][];
 		String[] entetes2 = {"Paires formees"};
-		DefaultTableModel model2 = new DefaultTableModel(mainTab2,entetes2);
+		MyTableModel model2 = new MyTableModel(mainTab2,entetes2);
+		model2.isCellEditable(ALLBITS, ALLBITS);
 		JTable tablePaires = new JTable(model2);
 
 		//========================================BOUTONS PRINCIPAUX=====================================================================================
 		JPanel les3boutons = new JPanel();
 		JButton bouton1 = new JButton(">");
 		JButton bouton2 = new JButton("<");
-		JButton boutonOKPoules = new JButton("OK");
+		this.boutonOKPoules = new JButton("OK");
 		boutonOKPoules.addActionListener(this.reactBout);
 		boutonOKPoules.setActionCommand("OKPoules");
 		les3boutons.setLayout(new GridLayout(3,1));
@@ -271,7 +277,8 @@ public class FenetrePrinc extends JFrame{
 		//========================================TABLEAU POULES=====================================================================================
 		String[][] mainTab3 = new String[12][];
 		String[] entetes3 = {"Poules formees"};
-		DefaultTableModel model3 = new DefaultTableModel(mainTab3,entetes3);
+		MyTableModel model3 = new MyTableModel(mainTab3,entetes3);
+		model3.isCellEditable(ALLBITS, ALLBITS);
 		JTable tablePoules = new JTable(model3);
 		
 		
@@ -298,7 +305,47 @@ public class FenetrePrinc extends JFrame{
 		this.pack();
 	}
 	
-	public void OKPoules(DefaultTableModel model){ 
+	public JButton getBoutonOKPaires() {
+		return boutonOKPaires;
+	}
+
+	public JButton getBoutonOKPoules() {
+		return boutonOKPoules;
+	}
+
+	public JMenuItem getItemChargerPaires() {
+		return itemChargerPaires;
+	}
+
+	public JMenuItem getItemSauverPaires() {
+		return itemSauverPaires;
+	}
+
+	public JMenuItem getItemExit() {
+		return itemExit;
+	}
+
+	public JMenuItem getItemAide() {
+		return itemAide;
+	}
+
+	public JButton getButListeJoueurs() {
+		return butListeJoueurs;
+	}
+
+	public JButton getButFormationPaires() {
+		return butFormationPaires;
+	}
+
+	public JButton getButCreationPoules() {
+		return butCreationPoules;
+	}
+
+	public JButton getButGestionMatchs() {
+		return butGestionMatchs;
+	}
+
+	public void OKPoules(MyTableModel model){ 
 		this.labelCentre.remove(this.compCentral);
 		//
 		JPanel panJou = new JPanel();
@@ -319,7 +366,7 @@ public class FenetrePrinc extends JFrame{
 
 	}
 	
-	public void affichermatchs(DefaultTableModel model){
+	public void affichermatchs(MyTableModel model){
 		this.labelCentre.remove(this.compCentral);
 		
 		//On creer un panel pour cette "page"
